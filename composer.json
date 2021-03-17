@@ -1,0 +1,26 @@
+{
+    "name": "withcandour/statamic-webpack",
+    "version": "0.1",
+    "description": "Statamic Webpack",
+    "autoload": {
+        "psr-4": {
+            "WithCandour\\StatamicWebpack\\": "src"
+        }
+    },
+    "authors": [
+        {
+            "name": "Candour"
+        }
+    ],
+    "extra": {
+        "statamic": {
+            "name": "Webpack",
+            "description": "Access webpack-generated resources in your antlers templates"
+        },
+        "laravel": {
+            "providers": [
+                "WithCandour\\StatamicWebpack\\ServiceProvider"
+            ]
+        }
+    }
+}
