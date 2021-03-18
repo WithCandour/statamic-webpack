@@ -4,6 +4,7 @@ namespace WithCandour\StatamicWebpack\Tags;
 
 use Statamic\Facades\File;
 use Statamic\Facades\Path;
+use Statamic\Facades\URL;
 use Statamic\Tags\Tags;
 
 class WebpackTags extends Tags
@@ -97,13 +98,14 @@ class WebpackTags extends Tags
         $content = collect($assets)
             ->map(function ($asset) {
                 $path = Path::assemble(
-                    '/',
                     config('statamic.webpack.css_directory'),
                     config('statamic.webpack.modern_dist_directory'),
                     $asset
                 );
 
-                return '<link rel="stylesheet" href="'.$path.'" />';
+                $url = URL::buildFromPath($path);
+
+                return '<link rel="stylesheet" href="'.$url.'" />';
             })
             ->implode("\n");
 
@@ -141,15 +143,17 @@ class WebpackTags extends Tags
                     $asset
                 );
 
+                $url = URL::buildFromPath($path);
+
                 if ($preload === 'module') {
-                    return '<link rel="modulepreload" href="'.$path.'">';
+                    return '<link rel="modulepreload" href="'.$url.'">';
                 }
 
                 if ($preload === true) {
-                    return '<link rel="preload" as="script" href="'.$path.'">';
+                    return '<link rel="preload" as="script" href="'.$url.'">';
                 }
 
-                return '<script type="module" src="'.$path.'"></script>';
+                return '<script type="module" src="'.$url.'"></script>';
 
             })
             ->implode("\n");
@@ -164,15 +168,17 @@ class WebpackTags extends Tags
                     $asset
                 );
 
+                $url = URL::buildFromPath($path);
+
                 if ($preload !== false) {
                     if ($preload === 'module') {
                         return null;
                     }
 
-                    return '<link rel="preload" as="script" href="'.$path.'">';
+                    return '<link rel="preload" as="script" href="'.$url.'">';
                 }
 
-                return '<script nomodule src="'.$path.'"></script>';
+                return '<script nomodule src="'.$url.'"></script>';
 
             })
             ->implode("\n");
