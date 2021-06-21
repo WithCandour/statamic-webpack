@@ -5,6 +5,7 @@ namespace WithCandour\StatamicWebpack\Tags;
 use Statamic\Facades\File;
 use Statamic\Facades\Path;
 use Statamic\Facades\URL;
+use Statamic\Support\Str;
 use Statamic\Tags\Tags;
 
 class WebpackTags extends Tags
@@ -103,7 +104,7 @@ class WebpackTags extends Tags
                     $asset
                 );
 
-                $url = URL::buildFromPath($path);
+                $url = Str::ensureLeft($path, '/');
 
                 return '<link rel="stylesheet" href="'.$url.'" />';
             })
@@ -143,7 +144,7 @@ class WebpackTags extends Tags
                     $asset
                 );
 
-                $url = URL::buildFromPath($path);
+                $url = Str::ensureLeft($path, '/');
 
                 if ($preload === 'module') {
                     return '<link rel="modulepreload" href="'.$url.'">';
@@ -168,7 +169,7 @@ class WebpackTags extends Tags
                     $asset
                 );
 
-                $url = URL::buildFromPath($path);
+                $url = Str::ensureLeft($path, '/');
 
                 if ($preload !== false) {
                     if ($preload === 'module') {
